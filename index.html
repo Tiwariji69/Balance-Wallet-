@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Balance Sheet</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header class="main-header">
+            <div>
+                <h1>Balance Sheet</h1>
+                <p class="subtitle">Personal Wealth Maximization</p>
+            </div>
+        </header>
+
+        <div class="grid-layout">
+            <!-- Left Column: Data Entry -->
+            <section class="panel input-panel">
+                <h2>Log Transaction</h2>
+                <form id="transaction-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Flow Type</label>
+                            <select id="type" required>
+                                <option value="expense">Expense</option>
+                                <option value="income">Income</option>
+                                <option value="investment">Investment</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select id="category" required></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="tx-date" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Amount (₹)</label>
+                        <input type="number" id="amount" required>
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <label>Notes</label>
+                        <input type="text" id="notes" placeholder="e.g., Auto rickshaw, SIP deduction">
+                    </div>
+                    <button type="submit" class="btn-primary">Save Entry</button>
+                </form>
+            </section>
+
+            <!-- Right Column: Analytics -->
+            <section class="panel dashboard-panel">
+                <div class="dashboard-header">
+                    <h2>Financial Health</h2>
+                    <select id="time-filter" class="filter-select">
+                        <option value="all">All Time</option>
+                        <option value="week">Past 7 Days</option>
+                        <option value="month">This Month</option>
+                    </select>
+                </div>
+                    <div class="metric-card" onclick="openDetails('income')">
+                        <h3>Inflows</h3>
+                        <p id="total-income" class="positive">₹0</p>
+                    </div>
+                    <div class="metric-card" onclick="openDetails('expense')">
+                        <h3>Outflows</h3>
+                        <p id="total-expense" class="negative">₹0</p>
+                    </div>
+                    <div class="metric-card" onclick="openDetails('investment')">
+                        <h3>Invested</h3>
+                        <p id="total-invested" class="neutral">₹0</p>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="cashflowChart"></canvas>
+                </div>
+            </section>
+        </div>
+
+        <!-- Drill-Down Modal -->
+        <div id="details-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modal-title">Ledger</h3>
+                    <button class="close-btn" onclick="closeDetails()">&times;</button>
+                </div>
+                <div class="transaction-list" id="transaction-list"></div>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
